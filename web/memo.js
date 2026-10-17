@@ -1,0 +1,5 @@
+state.memos ??= [];
+const memoList=document.querySelector('#memoList');
+function drawMemos(){memoList.innerHTML='';if(!state.memos.length){memoList.innerHTML='<div class="empty"><p>Ajoute ici tout ce que tu veux garder en tête.</p></div>';return}state.memos.forEach(m=>{const row=document.createElement('div');row.className='memo-item '+(m.done?'done':'');row.innerHTML=`<input type="checkbox" ${m.done?'checked':''}><span>${esc(m.text)}</span><button title="Supprimer">×</button>`;row.querySelector('input').addEventListener('change',e=>{m.done=e.target.checked;save();drawMemos()});row.querySelector('button').addEventListener('click',()=>{state.memos=state.memos.filter(x=>x.id!==m.id);save();drawMemos()});memoList.append(row)})}
+document.querySelector('#memoForm').addEventListener('submit',event=>{event.preventDefault();const input=document.querySelector('#memoInput'),text=input.value.trim();if(!text)return;state.memos.unshift({id:Date.now(),text,done:false});input.value='';save();drawMemos()});
+drawMemos();

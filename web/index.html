@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#237d60" />
+  <title>Cap sur tes objectifs</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="calendar.css" />
+  <link rel="stylesheet" href="gamify.css" />
+  <link rel="stylesheet" href="extras.css" />
+  <link rel="stylesheet" href="complete.css" />
+  <link rel="stylesheet" href="morning.css" />
+  <link rel="stylesheet" href="welcome.css" />
+</head>
+<body>
+  <section class="welcome-screen" id="welcomeScreen" aria-label="Accueil du jour">
+    <div class="welcome-orb"></div><div class="welcome-content"><span id="welcomeSymbol">☀️</span><p class="eyebrow">UN NOUVEAU JOUR</p><h1 id="welcomeTitle">Bonjour !</h1><p id="welcomeMessage"></p><button class="welcome-button" id="enterApp">Commencer ma journée →</button></div>
+  </section>
+  <main class="app-shell">
+    <header>
+      <div>
+        <p class="eyebrow" id="date"></p>
+        <h1>Bonjour, <span>champion·ne.</span></h1>
+        <p class="subtitle">Un petit pas aujourd’hui, un grand changement demain.</p>
+      </div>
+      <div class="header-actions"><button class="theme-button" id="themeToggle">🎨 Apparence</button><button class="icon-button" id="reset" title="Réinitialiser les données">↻</button></div>
+    </header>
+
+    <section class="morning-card" id="morningCard">
+      <div class="morning-symbol" id="morningSymbol">☀️</div>
+      <div class="morning-copy"><p class="eyebrow" id="morningLabel">TON MOMENT À TOI</p><h2 id="morningTitle">Bonjour !</h2><p id="morningMessage"></p></div>
+    </section>
+
+    <section class="hero-card">
+      <div class="circle-progress" id="progressRing"><strong id="doneCount">0</strong><small>/ <span id="totalCount">0</span> faits</small></div>
+      <div class="hero-copy"><p class="eyebrow">AUJOURD’HUI</p><h2 id="heroTitle">Prêt·e à commencer ?</h2><p id="heroText">Ajoute une première petite action et lance ta journée.</p></div>
+      <div class="streak"><span>🔥</span><div><strong id="streakCount">0 jours</strong><small>de série</small></div></div>
+      <div class="points"><span>⚡</span><div><strong id="pointsCount">0 pts</strong><small id="badgeName">Premiers pas</small></div></div>
+    </section>
+    <section class="panel today-panel">
+      <div class="section-title"><div><p class="eyebrow">TON PROGRAMME</p><h2>Aujourd’hui</h2></div><div class="inline-actions"><button class="quiet-button" id="exportButton">⇩ Sauvegarder</button><button class="quiet-button" id="notifyButton">🔔 Rappels</button></div></div>
+      <div id="todayList" class="today-list"></div>
+    </section>
+    <section class="panel memo-panel"><div class="section-title"><div><p class="eyebrow">À NE PAS OUBLIER</p><h2>Mon pense-bête</h2></div></div><form class="memo-form" id="memoForm"><input id="memoInput" maxlength="120" placeholder="Ex. Prendre mes affaires de foot" required><button class="add-button">+ Ajouter</button></form><div class="memo-list" id="memoList"></div></section>
+    <section class="panel stats-panel"><div><p class="eyebrow">PROGRESSION</p><h2>Mes statistiques</h2></div><div class="stats" id="stats"></div></section>
+    <section class="panel week-panel">
+      <div class="section-title"><div><p class="eyebrow">EN UN COUP D’ŒIL</p><h2>Cette semaine</h2></div><span class="week-summary" id="weekSummary">Aucune échéance</span></div>
+      <div class="week-strip" id="weekStrip"></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel tasks-panel">
+        <div class="section-title"><div><p class="eyebrow">À FAIRE</p><h2>Mes défis du jour</h2></div><button class="add-button" id="openTask">+ Ajouter</button></div>
+        <div id="taskList" class="task-list"></div>
+      </div>
+      <div class="panel goals-panel">
+        <div class="section-title"><div><p class="eyebrow">VISION</p><h2>Mes objectifs</h2></div><button class="add-button" id="openGoal">+ Ajouter</button></div>
+        <div id="goalList" class="goal-list"></div>
+      </div>
+    </section>
+    <section class="panel calendar-panel">
+      <div class="section-title"><div><p class="eyebrow">PLANIFICATION</p><h2>Mon agenda</h2></div><button class="add-button" id="openEvent">+ Rendez-vous</button><div class="calendar-nav"><button id="previousMonth" aria-label="Mois précédent">‹</button><strong id="monthTitle"></strong><button id="nextMonth" aria-label="Mois suivant">›</button></div></div>
+      <div class="weekdays"><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span></div>
+      <div class="calendar" id="calendar"></div>
+      <p class="calendar-note">Orange : objectifs · Bleu : rendez-vous · Vert : défis terminés.</p>
+      <div class="agenda-tools"><input id="agendaSearch" placeholder="Rechercher dans l’agenda" /></div><div class="agenda-list" id="agendaList"></div>
+    </section>
+  </main>
+
+  <dialog id="modal">
+    <form method="dialog" id="entryForm">
+      <button class="close" value="cancel">×</button>
+      <p class="eyebrow" id="modalLabel">NOUVEAU DÉFI</p>
+      <h2 id="modalTitle">Qu’as-tu envie de faire ?</h2>
+      <div class="name-row"><input id="entryEmoji" maxlength="4" value="✨" aria-label="Emoji" /><input id="entryName" autocomplete="off" required maxlength="80" placeholder="Ex. Lire 20 minutes" /></div>
+      <div id="taskFields"><label>Catégorie <select id="entryCategory"><option value="✨ Personnel">✨ Personnel</option><option value="💪 Santé">💪 Santé</option><option value="📚 Apprentissage">📚 Apprentissage</option><option value="💼 Travail">💼 Travail</option></select></label><label>Date prévue <input id="entryTaskDate" type="date" /></label><label class="repeat"><input id="entryRecurring" type="checkbox" /> Répéter ce défi chaque jour</label></div>
+      <div id="goalFields" hidden><label>Progression actuelle <input id="entryProgress" type="number" min="0" max="100" value="0" /></label><label>Date limite <input id="entryDeadline" type="date" /></label></div>
+      <div id="eventFields" hidden><label>Date <input id="entryEventDate" type="date" /></label><label>Heure <input id="entryEventTime" type="time" /></label><label>Couleur <select id="entryEventColor"><option value="#4ea3c3">Bleu</option><option value="#8c74c8">Violet</option><option value="#e88d54">Orange</option><option value="#e16f9b">Rose</option><option value="#3d9d77">Vert</option></select></label><label>Priorité <select id="entryPriority"><option value="normal">Normale</option><option value="important">Importante</option><option value="urgent">Urgente</option></select></label><label>Notes <textarea id="entryNotes" maxlength="280" placeholder="Lieu, matériel à prendre, personnes…"></textarea></label><label>Rappel <select id="entryReminder"><option value="0">À l’heure</option><option value="30">30 min avant</option><option value="60">1 h avant</option><option value="1440">1 jour avant</option></select></label><label class="repeat"><input id="entryWeekly" type="checkbox" /> Répéter chaque semaine</label><div class="weekday-picker" id="weekdayPicker" hidden><span>Jours :</span><label><input type="checkbox" value="1">L</label><label><input type="checkbox" value="2">M</label><label><input type="checkbox" value="3">M</label><label><input type="checkbox" value="4">J</label><label><input type="checkbox" value="5">V</label><label><input type="checkbox" value="6">S</label><label><input type="checkbox" value="0">D</label></div></div>
+      <button class="primary" value="default">Créer</button>
+    </form>
+  </dialog>
+  <div class="theme-picker" id="themePicker" hidden><strong>Choisis ton ambiance</strong><div><button data-theme="nature">Vert</button><button data-theme="ocean">Bleu</button><button data-theme="violet">Violet</button><button data-theme="sunset">Orange</button><button data-theme="night">Sombre</button></div><label>Fond <input id="customBackground" type="color" value="#f8f5ed"></label><label>Couleur principale <input id="customAccent" type="color" value="#237d60"></label></div>
+  <textarea id="dailyNote" hidden></textarea>
+  <template id="emptyTasks"><div class="empty"><span>✦</span><p>Rien de prévu pour l’instant.<br>Offre-toi un premier petit défi.</p></div></template>
+  <template id="emptyGoals"><div class="empty"><span>◎</span><p>Un objectif donne une direction.<br>Ajoute celui qui compte le plus pour toi.</p></div></template>
+  <script src="app.js"></script>
+  <script src="morning.js"></script>
+  <script src="memo.js"></script>
+  <script src="pwa.js"></script>
+</body>
+</html>
